@@ -2,75 +2,47 @@ import { StyleSheet, Text, View, Button, Image, FlatList, Pressable } from 'reac
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { SharedElement } from 'react-navigation-shared-element';
+import { Ionicons } from '@expo/vector-icons'; 
 
 
 export default function App() {
 
-  const values = [
-    {
-    id: '0',
-    image: 'https://picsum.photos/200/300?random=2',
-    title: 'Teste0'
-    },
-    {
-    id: '1', 
-    image: 'https://picsum.photos/200/300?random=1',
-    title: 'Teste1' 
-    }
-  ]
-
-  function Vizualizer({navigation, route}){
-    return(
-      <View style = {{flex: 1, flexDirection: 'row'}} key = {route.id}>
-        <Pressable onPress={() => navigation.push('TesteExemplo', {route})}>
-          <SharedElement id = {route.id} nativeID={`${route.id}`}>
-            <Image source={{uri: route.image}}  
-            style = {{width:100, height: 100, margin: 10}}
-            />
-          </SharedElement>
-        </Pressable>
-      </View>
-    )
-  } 
-
   function Teste({navigation}){
     return(
       <View>
-        <FlatList
-          data={values}
-          keyExtractor = {(item) => item.id}
-          renderItem = {({item}) => <Vizualizer navigation={navigation} route = {item}/>}
-          horizontal
-          />
+
       </View>
     )
   }
 
-  function TesteExemplo({navigation, route}){
+  const headerOptions = {
     
-    const  item  = route.params.route
-
-    return(
-      <View style = {styles.container} key = {item.id}>
-        <SharedElement id = {item.id} nativeID={`${item.id}`}>
-          <Image source={{uri: item.image}} style = {{width: 250, height: 250}}/>
-        </SharedElement>
-        <Text>{item.title}</Text>
-      </View>
-    )
   }
 
   const Stack = createSharedElementStackNavigator();
 
   return (
-
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Teste' screenOptions={{headerShown: false}}>
-        <Stack.Screen name = "Teste" component={Teste} />
-        <Stack.Screen name = "TesteExemplo" component={TesteExemplo}
-        sharedElements = {({params}) => [params.route.id]
-      }
-        />
+      <Stack.Navigator initialRouteName='Teste' screenOptions={{
+        headerShown: true}}>
+        <Stack.Screen name = "Teste" component={Teste} options = {{
+          headerLeft: () => (
+          <View style = {styles.headerStyle}>
+            <Image source={{uri: 'https://picsum.photos/200/300'}} 
+            style = {{width: 30, height: 30, borderRadius: 40, marginRight: 10}}/>
+            <Text style = {{fontSize: 16, fontWeight: '600'}}>Hi, Eduardo!</Text>
+          </View>
+          ),
+          headerRight: () => (
+            <View style = {{flexDirection: 'row', marginHorizontal: 20, justifyContent: 'space-between'}}>
+              <Ionicons name="ios-search-outline" size={25} color="white" style = {{marginRight: 15}}/>
+              <Ionicons name="ios-cart-outline" size={25} color="white"  />
+              {/* Needs to add badges for ios-cart-outline */}
+            </View>
+          ),
+          headerTitle: '',
+          
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -83,4 +55,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  headerStyle: {
+    flex: 1,
+    // borderColor: 'red',
+    // borderWidth: 2,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+
+  }
 });
