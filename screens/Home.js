@@ -1,26 +1,15 @@
-import { StyleSheet, Text, View, Button, Image, FlatList, Pressable, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, Pressable, ScrollView } from 'react-native';
 import { createSharedElementStackNavigator, SharedElement } from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useEffect, useState } from 'react';
 
-export default function Home(){
-
-        const generateDisheImage = () => {
-            const value = Math.round(Math.random() * 3)
+export default function Home(){        
         
-            switch (value){
-              case 1: return 'burger';
-              case 2: return 'pizza';
-              case 3: return 'dessert';
-            }
-          }
-        
-        
-          const [dishesImages, setDishesImages] = useState([
-            {id: 0, image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
-          ])
+    const [dishesImages, setDishesImages] = useState([
+        {id: 0, image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
+    ])
         
           // useEffect(() => {
           //   fetch('https://foodish-api.herokuapp.com/api/')
@@ -29,7 +18,7 @@ export default function Home(){
           // }, [])
         
         
-          const servicesData = [
+        const servicesData = [
             { id: 0, title: 'All'},
             { id: 1, title: 'Pizza',     image: 'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',},
             { id: 2, title: 'Chinese',   image: 'https://cdn-icons-png.flaticon.com/512/2718/2718224.png'},
@@ -48,7 +37,7 @@ export default function Home(){
             {id: 6, image: 'https://s3.envato.com/files/246755655/1200x627.jpg'}
           ]
         
-          function ViewPromotions({item}){
+        function ViewPromotions({item}){
             return(
               <View style = {styles.promotions}>
                 <Image 
@@ -59,7 +48,7 @@ export default function Home(){
             )
           }
         
-          function ViewServices({item}){
+        function ViewServices({item}){
         
             if ( item.id > 0){
               return(
@@ -77,6 +66,32 @@ export default function Home(){
               </View>
             }
           }
+
+    function ViewPopular({item}){
+            return(
+                
+            <View style = {styles.popularContainer}>
+                <View style = {styles.popularViewImage}>
+                    <Image source={{uri: item.image}} 
+                    style = {{width: 100, height: 100, borderRadius: 40, zIndex: 2}}/>
+                </View>
+              <View style = {styles.popularEffect}>
+                <Text style = {{fontSize: 15, fontWeight: 'bold'}}>Pizza</Text>
+                <Text style = {{fontSize: 11, opacity: 0.7}}>Description</Text>
+
+                <View style = {styles.popularViewInfo}>
+                  <View style = {{flexDirection: 'row', alignItems: 'center'}}>
+                    <MaterialIcons name="attach-money" size={20} color="white" />
+                    <Text  style = {{fontWeight: 'bold'}}>{Math.round(Math.random() * 10)}</Text>
+                </View>
+                    <AntDesign     name="plussquare"   size={28}  color="white" />
+                </View>
+              </View>
+          </View>
+        )
+            }
+
+
             return(
               <View style = {{backgroundColor: '#fff', flex: 1}}>
                 <ScrollView>
@@ -131,28 +146,20 @@ export default function Home(){
                       </View>
                   </View>
         
-                  <View style = {{marginLeft: 20}}>
+                  <View style = {{marginLeft: 20, width: '100%'}}>
                     <Text style = {{fontSize: 18, marginBottom: 2, fontWeight: '500'}}>Popular</Text>
                       <View style = {styles.servicesRow}/>
-        
-                      <View style = {styles.popularContainer}>
-                        <View style = {styles.popularViewImage}>
-                            <Image source={{uri: dishesImages[0].image}} 
-                            style = {{width: 100, height: 100, borderRadius: 40, zIndex: 2}}/>
-                          </View>
-                          <View style = {styles.popularEffect}>
-                            <Text style = {{fontSize: 15, fontWeight: 'bold'}}>Macarrão</Text>
-                            <Text style = {{fontSize: 11, opacity: 0.7}}>Description</Text>
-        
-                            <View style = {styles.popularViewInfo}>
-                              <View style = {{flexDirection: 'row', alignItems: 'center'}}>
-                              <MaterialIcons name="attach-money" size={20} color="white" />
-                              <Text  style = {{fontWeight: 'bold'}}>3.5</Text>
-                             </View>
-                             <AntDesign     name="plussquare"   size={28}  color="white" />
-                            </View>
-                          </View>
-                      </View>
+
+                      <FlatList
+                      horizontal
+                      showsHorizontalScrollIndicator = {false}
+                      data = {dishesImages}
+                      keyExtractor = {({id}) => id}
+                      renderItem = {({item}) => <ViewPopular item={item} />}
+                      snapToInterval = {150}
+                      decelerationRate = {'fast'}
+                      />
+
                     </View>
                 </ScrollView>
               </View>
@@ -161,19 +168,8 @@ export default function Home(){
 
 const styles = StyleSheet.create({
   
-  headerStyle: {
-    // borderColor: 'red',
-    // borderWidth: 2,
-    padding: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-
   intro: {
     width: '100%',
-    // borderColor: 'red',
-    // borderWidth: 2,
     padding: 20,
     justifyContent: 'center',
   },
@@ -181,9 +177,8 @@ const styles = StyleSheet.create({
   delivery:{
     padding: 20,
     width: '100%',
-    // borderColor: 'red',
-    // borderWidth: 2
   },
+
   promotions: {
     marginRight: 10,
   },
@@ -206,8 +201,6 @@ const styles = StyleSheet.create({
   },
 
   iconInsideService: {
-    // borderColor: 'blue',
-    // borderWidth: 2,
     paddingBottom: 4,
     paddingHorizontal: 5,
     borderRadius: 60,
@@ -223,8 +216,6 @@ const styles = StyleSheet.create({
     marginRight: 25,
     height: 90,
     width: 60,
-    // borderColor: 'red',
-    // borderWidth: 2,
     borderRadius: 60,
     alignItems: 'center',
     padding: 3,
@@ -232,17 +223,14 @@ const styles = StyleSheet.create({
   },
 
   popularContainer: {
-    // borderColor: 'red',
-    // borderWidth: 2,
-    width: '45%',
+    width: 150,
     height: 200,
     alignItems: 'center',
-    paddingTop: 35
+    paddingTop: 35,
+    marginRight: 30,
   },
 
   popularEffect: {
-    // borderColor: 'green', 
-    // borderWidth: 2, 
     borderRadius: 15,
     width: '100%', 
     height: '100%',
@@ -253,8 +241,6 @@ const styles = StyleSheet.create({
   },
 
   popularViewImage: {
-    // borderColor: 'blue', 
-    // borderWidth: 2, 
     width: 100, 
     height: 100,
     position: 'absolute',
@@ -263,8 +249,6 @@ const styles = StyleSheet.create({
 
   popularViewInfo: {
     width: '100%',
-    // borderColor: 'blue',
-    // borderWidth: 2,
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
