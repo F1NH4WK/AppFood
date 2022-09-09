@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Button, Image, FlatList, Pressable, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { createSharedElementStackNavigator, SharedElement } from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
 
 import Home from './screens/Home';
+import DetailsDishes from './screens/DetailsDishes';
 
 export default function App() {
 
@@ -12,7 +13,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home' screenOptions={{headerStyle: {backgroundColor: '#fff'}, headerShadowVisible: false}}>
+
+      <Stack.Navigator initialRouteName='Home' 
+      screenOptions={{headerStyle: {backgroundColor: '#fff'}, headerShadowVisible: false}}>
         <Stack.Screen name = "Home" component={Home} options = {{
           headerLeft: () => (
           <View style = {styles.headerStyle}>
@@ -28,9 +31,10 @@ export default function App() {
               {/* Needs to add badges for ios-cart-outline */}
             </View>
           ),
-          headerTitle: '',
-          
+          headerTitle: '', 
         }} />
+
+        <Stack.Screen name='DetailsDishes' component={DetailsDishes} options = {{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

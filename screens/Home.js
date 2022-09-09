@@ -2,12 +2,18 @@ import { StyleSheet, Text, View, Image, FlatList, Pressable, ScrollView } from '
 import { createSharedElementStackNavigator, SharedElement } from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
-import DropDownPicker from 'react-native-dropdown-picker';
 import { useEffect, useState } from 'react';
+import { Snackbar } from 'react-native-paper';
 
-export default function Home(){        
+export default function Home({navigation}){        
         
-    const [dishesImages, setDishesImages] = useState([
+  // SNACK BAR CONFS
+  const [snackVisible, setSnackVisible] = useState(false);
+  const onToggleSnack = () => setSnackVisible(true)
+  const onDismissSnack = () => setSnackVisible(false)
+
+  
+  const [dishesImages, setDishesImages] = useState([
         {id: 0, image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
     ])
         
@@ -71,10 +77,10 @@ export default function Home(){
             return(
                 
             <View style = {styles.popularContainer}>
-                <View style = {styles.popularViewImage}>
+              <Pressable style = {styles.popularViewImage} onPress = {() => navigation.navigate('DetailsDishes')}>
                     <Image source={{uri: item.image}} 
                     style = {{width: 100, height: 100, borderRadius: 40, zIndex: 2}}/>
-                </View>
+              </Pressable>
               <View style = {styles.popularEffect}>
                 <Text style = {{fontSize: 15, fontWeight: 'bold'}}>Pizza</Text>
                 <Text style = {{fontSize: 11, opacity: 0.7}}>Description</Text>
@@ -84,7 +90,8 @@ export default function Home(){
                     <MaterialIcons name="attach-money" size={20} color="white" />
                     <Text  style = {{fontWeight: 'bold'}}>{Math.round(Math.random() * 10)}</Text>
                 </View>
-                    <AntDesign     name="plussquare"   size={28}  color="white" />
+                    <AntDesign     name="plussquare"   size={28}  color="white"
+                    onPress={onToggleSnack} />
                 </View>
               </View>
           </View>
@@ -159,9 +166,16 @@ export default function Home(){
                       snapToInterval = {150}
                       decelerationRate = {'fast'}
                       />
-
                     </View>
                 </ScrollView>
+
+                <Snackbar 
+                visible = {snackVisible}
+                onDismiss = {onDismissSnack}
+                duration = {3000}
+                action = {{label: 'Undo', onPress: () => {}}}>
+                  Added to cart!
+                </Snackbar>
               </View>
             )
           }
