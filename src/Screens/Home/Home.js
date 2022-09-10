@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Image, FlatList, Pressable, ScrollView } from 'react-native';
-import { createSharedElementStackNavigator, SharedElement } from 'react-navigation-shared-element';
-import { NavigationContainer } from '@react-navigation/native';
+import { SharedElement } from 'react-navigation-shared-element';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 import { useEffect, useState } from 'react';
 import { Snackbar } from 'react-native-paper';
+
+import styles from './styles';
 
 export default function Home({navigation}){        
         
@@ -14,7 +15,7 @@ export default function Home({navigation}){
 
   
   const [dishesImages, setDishesImages] = useState([
-        {id: 0, image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
+        {id: '0', image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
     ])
         
           // useEffect(() => {
@@ -77,10 +78,13 @@ export default function Home({navigation}){
             return(
                 
             <View style = {styles.popularContainer}>
-              <Pressable style = {styles.popularViewImage} onPress = {() => navigation.navigate('DetailsDishes')}>
+              <Pressable style = {styles.popularViewImage} onPress = {() => navigation.push('DetailsDishes', dishesImages)}>
+                <SharedElement id={dishesImages[0].id}>
                     <Image source={{uri: item.image}} 
-                    style = {{width: 100, height: 100, borderRadius: 40, zIndex: 2}}/>
+                    style = {{width: 100, height: 100, borderRadius: 300, zIndex: 2}}/>
+                </SharedElement>
               </Pressable>
+
               <View style = {styles.popularEffect}>
                 <Text style = {{fontSize: 15, fontWeight: 'bold'}}>Pizza</Text>
                 <Text style = {{fontSize: 11, opacity: 0.7}}>Description</Text>
@@ -179,96 +183,3 @@ export default function Home({navigation}){
               </View>
             )
           }
-
-const styles = StyleSheet.create({
-  
-  intro: {
-    width: '100%',
-    padding: 20,
-    justifyContent: 'center',
-  },
-
-  delivery:{
-    padding: 20,
-    width: '100%',
-  },
-
-  promotions: {
-    marginRight: 10,
-  },
-  servicesRow: {
-    borderColor: '#ED2C47',
-    borderWidth: 1,
-    width: '25%',
-    marginBottom: 20
-    },
-
-  allServices: {
-    height: 90,
-    width: 60,
-    borderRadius: 60,
-    backgroundColor: 'gray',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 25
-
-  },
-
-  iconInsideService: {
-    paddingBottom: 4,
-    paddingHorizontal: 5,
-    borderRadius: 60,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    marginBottom: 5
-  },
-
-  services: {
-    marginRight: 25,
-    height: 90,
-    width: 60,
-    borderRadius: 60,
-    alignItems: 'center',
-    padding: 3,
-    backgroundColor: '#ED2C47',
-  },
-
-  popularContainer: {
-    width: 150,
-    height: 200,
-    alignItems: 'center',
-    paddingTop: 35,
-    marginRight: 30,
-  },
-
-  popularEffect: {
-    borderRadius: 15,
-    width: '100%', 
-    height: '100%',
-    paddingTop: 80,
-    backgroundColor: '#ED2C47',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-
-  popularViewImage: {
-    width: 100, 
-    height: 100,
-    position: 'absolute',
-    zIndex: 2
-  },
-
-  popularViewInfo: {
-    width: '100%',
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10
-  }
-  
-
-});

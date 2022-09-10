@@ -12,6 +12,7 @@ web-build/
 babel.config.js
 package-lock.json
 .expo-shared/
+.vscode/
 
 # macOS
 .DS_Store

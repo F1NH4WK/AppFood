@@ -34,7 +34,14 @@ export default function App() {
           headerTitle: '', 
         }} />
 
-        <Stack.Screen name='DetailsDishes' component={DetailsDishes} options = {{headerShown: false}} />
+        <Stack.Screen name='DetailsDishes' component={DetailsDishes} 
+        options = {{headerShown: false}}
+        sharedElements = {({params}) => {
+        const image = params[0]
+        return [{id: image.id,
+        animation: 'fade-out',
+        resize: 'none',
+        }]}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
