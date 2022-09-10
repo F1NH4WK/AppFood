@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { createSharedElementStackNavigator, SharedElement } from 'react-navigation-shared-element';
+import { createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
 
-import Home from './screens/Home';
-import DetailsDishes from './screens/DetailsDishes';
+import Home from './src/Screens/Home/';
+import DetailsDishes from './src/Screens/DetailsDishes/';
 
 export default function App() {
 
@@ -35,13 +35,7 @@ export default function App() {
         }} />
 
         <Stack.Screen name='DetailsDishes' component={DetailsDishes} 
-        options = {{headerShown: false}}
-        sharedElements = {({params}) => {
-        const image = params[0]
-        return [{id: image.id,
-        animation: 'fade-out',
-        resize: 'none',
-        }]}} />
+        options = {{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, FlatList, Pressable, ScrollView } from 'react-native';
+import { Text, View, Image, FlatList, Pressable, ScrollView } from 'react-native';
 import { SharedElement } from 'react-navigation-shared-element';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 import { useEffect, useState } from 'react';
@@ -79,10 +79,8 @@ export default function Home({navigation}){
                 
             <View style = {styles.popularContainer}>
               <Pressable style = {styles.popularViewImage} onPress = {() => navigation.push('DetailsDishes', dishesImages)}>
-                <SharedElement id={dishesImages[0].id}>
                     <Image source={{uri: item.image}} 
                     style = {{width: 100, height: 100, borderRadius: 300, zIndex: 2}}/>
-                </SharedElement>
               </Pressable>
 
               <View style = {styles.popularEffect}>

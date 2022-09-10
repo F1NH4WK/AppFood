@@ -2,31 +2,46 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
 
-    imageFront:{
-        width: 250,
-        height: 250,
-        borderRadius: 300,
-        marginBottom: 10
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 40,
+        paddingHorizontal: 20,
     },
 
-    firstInfos:{
+    header: {
+        flexDirection: 'row',
         width: '100%',
-        height: '15%',
+        height: 80,
         // borderColor: 'red',
         // borderWidth: 2,
+        padding: 5,
         justifyContent: 'space-between',
-        flexDirection: 'row',
+        alignItems: 'center'
     },
 
-    starsView: {
-        width: 80,
-        height: '45%',
-        backgroundColor: '#ED2C47',
-        borderRadius: 8,
-        justifyContent: 'center',
-        padding: 8,
-        margin: 5
-    }
+    foodName: {
+        fontSize: 20,
+        textAlign: 'right',
+
+    },
+
+    foodCategory: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color:'#ED2C47',
+    },
+
+    image: {
+        width: 400,
+        height: 400,
+        borderRadius: 300,
+        position: 'absolute',
+
+        top: 80,
+        right: -60,
+    },
+
 })
 
 export default styles;
