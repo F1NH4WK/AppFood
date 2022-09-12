@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
 
 import Home from './src/Screens/Home/';
 import DetailsDishes from './src/Screens/DetailsDishes/';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
 
 
-  const Stack = createSharedElementStackNavigator();
+  const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>

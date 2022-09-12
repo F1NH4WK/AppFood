@@ -1,5 +1,4 @@
 import { Text, View, Image, FlatList, Pressable, ScrollView } from 'react-native';
-import { SharedElement } from 'react-navigation-shared-element';
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 import { useEffect, useState } from 'react';
 import { Snackbar } from 'react-native-paper';
