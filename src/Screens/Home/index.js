@@ -21,6 +21,8 @@ export default function Home({navigation}){
         type: 'Pizza',
       }
     ])
+
+    const [generateImage, setGenerateImage] = useState(true)
         
           useEffect(() => {
 
@@ -35,7 +37,8 @@ export default function Home({navigation}){
                 price: Math.round(Math.random() * 30),
                 type: type
               },]))
-          }, [])
+            
+          }, [generateImage])
         
         
         const servicesData = [
@@ -128,7 +131,7 @@ export default function Home({navigation}){
               </View>
           </View>
         )
-            }
+      }
 
 
             return(
@@ -197,7 +200,7 @@ export default function Home({navigation}){
                       renderItem = {({item}) => <ViewPopular item={item} />}
                       snapToInterval = {150}
                       decelerationRate = {'fast'}
-                      
+                      onEndReached = {() => setGenerateImage(!generateImage)}
                       />
                     </View>
                 </ScrollView>
