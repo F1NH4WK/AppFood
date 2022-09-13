@@ -25,7 +25,7 @@ export default function App() {
           </View>
           ),
           headerRight: () => (
-            <View style = {{flexDirection: 'row', marginHorizontal: 30, justifyContent: 'space-between'}}>
+            <View style = {{flexDirection: 'row', marginHorizontal: 10, justifyContent: 'space-between'}}>
               <Ionicons name="ios-search-outline" size={25} color="white" style = {{marginRight: 15}}/>
               <Ionicons name="ios-cart-outline" size={25} color="white"  />
               {/* Needs to add badges for ios-cart-outline */}
@@ -38,15 +38,13 @@ export default function App() {
         options = {{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
+    
   );
 }
 
 const styles = StyleSheet.create({
   
   headerStyle: {
-    // borderColor: 'red',
-    // borderWidth: 2,
-    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'

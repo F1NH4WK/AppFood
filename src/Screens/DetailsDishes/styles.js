@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         color:'#ED2C47',
+        textAlign: 'right'
     },
 
     image: {
@@ -61,14 +62,16 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+    
     footerAddCart: {
         flexDirection: 'row',
         width: '50%',
         alignItems: 'center',
         backgroundColor: '#ED2C47',
         borderRadius: 50,
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         height: '70%',
+        padding: 5,
     },
 })
 

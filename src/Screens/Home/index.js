@@ -14,14 +14,28 @@ export default function Home({navigation}){
 
   
   const [dishesImages, setDishesImages] = useState([
-        {id: '0', image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg'}
+        {
+        id: '0', 
+        image: 'https://foodish-api.herokuapp.com/images/pizza/pizza12.jpg', 
+        price: Math.round(Math.random() * 30),
+        type: 'Pizza',
+      }
     ])
         
-          // useEffect(() => {
-          //   fetch('https://foodish-api.herokuapp.com/api/')
-          //   .then((response) => response.json())
-          //   .then((json) => setDishesImages([...dishesImages, {id: dishesImages.length, image: json.image}]))
-          // }, [])
+          useEffect(() => {
+
+            const type = randomType();
+            fetch(`https://foodish-api.herokuapp.com/api/images/${type.toLowerCase()}`)
+            .then((response) => response.json())
+            .then((json) => setDishesImages([
+              ...dishesImages, 
+              {
+                id: dishesImages.length, image: 
+                json.image, 
+                price: Math.round(Math.random() * 30),
+                type: type
+              },]))
+          }, [])
         
         
         const servicesData = [
@@ -43,6 +57,23 @@ export default function Home({navigation}){
             {id: 6, image: 'https://s3.envato.com/files/246755655/1200x627.jpg'}
           ]
         
+
+          function randomType(){
+            const randomNumber = Math.round(Math.random() * 8)
+    
+            switch(randomNumber){
+                case 1: return 'Pizza';
+                case 2: return 'Pasta';
+                case 3: return 'Rice';
+                case 4: return 'Samosa';
+                case 5: return 'Burger';
+                case 6: return 'Dessert';
+                case 7: return 'Idly';
+                case 8: return 'Dosa';
+                case 9: return 'Biryani'
+            }
+        }
+
         function ViewPromotions({item}){
             return(
               <View style = {styles.promotions}>
@@ -77,19 +108,19 @@ export default function Home({navigation}){
             return(
                 
             <View style = {styles.popularContainer}>
-              <Pressable style = {styles.popularViewImage} onPress = {() => navigation.push('DetailsDishes', dishesImages)}>
+              <Pressable style = {styles.popularViewImage} onPress = {() => navigation.push('DetailsDishes', dishesImages[item.id])}>
                     <Image source={{uri: item.image}} 
                     style = {{width: 100, height: 100, borderRadius: 300, zIndex: 2}}/>
               </Pressable>
 
               <View style = {styles.popularEffect}>
-                <Text style = {{fontSize: 15, fontWeight: 'bold'}}>Pizza</Text>
+                <Text style = {{fontSize: 15, fontWeight: 'bold'}}>{item.type}</Text>
                 <Text style = {{fontSize: 11, opacity: 0.7}}>Description</Text>
 
                 <View style = {styles.popularViewInfo}>
                   <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                     <MaterialIcons name="attach-money" size={20} color="white" />
-                    <Text  style = {{fontWeight: 'bold'}}>{Math.round(Math.random() * 10)}</Text>
+                    <Text  style = {{fontWeight: 'bold'}}>{item.price}</Text>
                 </View>
                     <AntDesign     name="plussquare"   size={28}  color="white"
                     onPress={onToggleSnack} />
@@ -166,6 +197,7 @@ export default function Home({navigation}){
                       renderItem = {({item}) => <ViewPopular item={item} />}
                       snapToInterval = {150}
                       decelerationRate = {'fast'}
+                      
                       />
                     </View>
                 </ScrollView>
